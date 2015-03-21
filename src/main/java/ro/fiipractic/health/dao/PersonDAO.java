@@ -33,6 +33,11 @@ public class PersonDAO {
 		}
 	}
 
+	/**
+	 * Method which retrieves all the records in the Person table.
+	 * 
+	 * @return List of Person objects.
+	 */
 	public List<Person> getAllPersons() {
 		session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
