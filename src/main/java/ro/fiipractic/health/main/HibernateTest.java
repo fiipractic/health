@@ -1,16 +1,20 @@
 package ro.fiipractic.health.main;
 
-import org.hibernate.Session;
+import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import ro.fiipractic.health.dao.PersonDAO;
 import ro.fiipractic.health.domain.Person;
-import ro.fiipractic.health.util.HibernateUtil;
 
 public class HibernateTest {
 	public static void main(String[] args) {
 
-		Session session = HibernateUtil.getSessionFactory().openSession();
-
-		session.beginTransaction();
+		// load spring context
+		ApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"health-app-spring-context.xml");
+		PersonDAO personDao = ctx.getBean("personDao", PersonDAO.class);
 
 		Person person1 = new Person("Vasile", "Popescu");
 		person1.setCnp("173753839585");
@@ -21,12 +25,12 @@ public class HibernateTest {
 		Person person4 = new Person("Smaranda", "Gheorghiu");
 		person4.setCnp("273753839585");
 
-		session.save(person1);
-		session.save(person2);
-		session.save(person3);
-		session.save(person4);
-		
-		session.getTransaction().commit();
-		session.close();
+		personDao.save(person1);
+		personDao.save(person2);
+		personDao.save(person3);
+		personDao.save(person4);
+
+		List<Person> persons = personDao.findAll();
+		System.out.println("Found " + persons.size() + " persons in database.");
 	}
 }
