@@ -33,6 +33,23 @@ public class PersonDAO {
 		}
 	}
 
+	public List<Person> getAllPersons() {
+		session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		try {
+			String hql = "FROM Person";
+			Query query = session.createQuery(hql);
+			List<Person> results = query.list();
+			return results;
+		} catch (HibernateException e) {
+			System.err.println(e);
+		} finally {
+			session.getTransaction().commit();
+			session.close();
+		}
+		return null;
+	}
+
 	/**
 	 * Return a Person from database based on its id.
 	 * 
@@ -55,7 +72,7 @@ public class PersonDAO {
 			session.getTransaction().commit();
 			session.close();
 		}
-		return prs;
+		return null;
 	}
 
 	/**

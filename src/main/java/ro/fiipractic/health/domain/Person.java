@@ -15,24 +15,28 @@ public class Person {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private long id;
-	
+
 	@Column
 	private String firstName;
-	
+
 	@Column
 	private String lastName;
-	
+
 	@Column
 	private String cnp;
 
 	public Person() {
 	}
-	
+
 	public Person(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
-	
+
+	public long getId() {
+		return id;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
