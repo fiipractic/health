@@ -30,4 +30,8 @@ public class PersonDAOImpl implements PersonDAO {
 		sessionFactory.getCurrentSession().delete(contact);
 	}
 
+	public Person findById(long id) {
+		return null;
+	}
+
 }
