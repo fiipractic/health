@@ -31,7 +31,8 @@ public class PersonDAOImpl implements PersonDAO {
 	}
 
 	public Person findById(long id) {
-		return null;
+		return (Person) sessionFactory.getCurrentSession()
+				.createQuery("FROM Person where id =" + id).list().get(0);
 	}
 
 }
