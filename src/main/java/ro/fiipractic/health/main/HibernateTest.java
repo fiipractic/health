@@ -32,5 +32,12 @@ public class HibernateTest {
 
 		List<Person> persons = personDao.findAll();
 		System.out.println("Found " + persons.size() + " persons in database.");
+		
+		personDao.delete(person3);
+		System.out.println();
+		
+		persons = personDao.findAll();
+		System.out.println("Found " + persons.size() + " persons in database.");
+		
 	}
 }

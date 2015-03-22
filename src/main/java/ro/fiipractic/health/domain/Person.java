@@ -25,12 +25,22 @@ public class Person {
 	@Column
 	private String cnp;
 
+	
+	
 	public Person() {
 	}
 	
 	public Person(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+	}
+	
+	public long getId() {
+		return this.id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public String getFirstName() {

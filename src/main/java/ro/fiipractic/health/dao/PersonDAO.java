@@ -8,6 +8,8 @@ public interface PersonDAO {
 	
 	public List<Person> findAll();
 	
+	public Person findById(long id);
+	
     public Person save(Person contact);
     
     public void delete(Person contact);
