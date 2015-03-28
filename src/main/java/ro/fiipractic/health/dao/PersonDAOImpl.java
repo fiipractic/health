@@ -38,7 +38,9 @@ public class PersonDAOImpl implements PersonDAO {
 
 	/**
 	 * Ar putea exista mai multe persoane cu acelasi prenume
-	 * @param firstName prenumele persoanei cautate
+	 * 
+	 * @param firstName
+	 *            prenumele persoanei cautate
 	 * @return lista cu persoane ce au prenumele egal cu <b>firstName</b>
 	 */
 	public List<Person> findByFirstName(String firstName) {
