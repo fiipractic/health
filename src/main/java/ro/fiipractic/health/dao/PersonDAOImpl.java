@@ -2,6 +2,7 @@ package ro.fiipractic.health.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,6 +34,21 @@ public class PersonDAOImpl implements PersonDAO {
 	public Person findById(long id) {
 		return (Person) sessionFactory.getCurrentSession()
 				.createQuery("FROM Person where id =" + id).list().get(0);
+	}
+
+	/**
+	 * Ar putea exista mai multe persoane cu acelasi prenume
+	 * @param firstName prenumele persoanei cautate
+	 * @return lista cu persoane ce au prenumele egal cu <b>firstName</b>
+	 */
+	public List<Person> findByFirstName(String firstName) {
+		String queryString = "FROM Person where firstname = :firstName";
+		Query query = sessionFactory.getCurrentSession().createQuery(
+				queryString);
+		query.setParameter("firstName", firstName);
+		List<Person> results = query.list();
+		return results;
+
 	}
 
 }

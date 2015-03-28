@@ -10,6 +10,8 @@ public interface PersonDAO {
 	
 	public Person findById(long id);
 	
+	public List<Person> findByFirstName(String firstName);
+	
     public Person save(Person contact);
     
     public void delete(Person contact);
