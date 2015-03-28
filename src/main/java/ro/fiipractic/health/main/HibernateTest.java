@@ -40,12 +40,17 @@ public class HibernateTest {
 		System.out.println("Found " + persons.size() + " persons in database.");
 
 		Person prs = personDao.findById(person2.getId());
-		System.out.println("The person with id=" + person2.getId()
-				+ "has the firstname=" + prs.getFirstName());
-		
+		System.out.println("The person with id= " + person2.getId()
+				+ " has the firstname= " + prs.getFirstName());
+
 		prs.setFirstName("Georgel");
 		personDao.save(prs);
-		System.out.println("Updated person :" + prs.getFirstName() + " " + prs.getLastName());
+		System.out.println("Updated person: " + prs.getFirstName() + " "
+				+ prs.getLastName());
+
+		persons = personDao.findByFirstName("Georgel");
+		System.out.println("Persons with 'Georgel' as firstname: "
+				+ persons.get(0).getFirstName() + " " + prs.getLastName());
 
 	}
 }
