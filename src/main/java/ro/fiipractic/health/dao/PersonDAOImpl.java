@@ -1,5 +1,6 @@
 package ro.fiipractic.health.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -18,8 +19,11 @@ public class PersonDAOImpl implements PersonDAO {
 	private SessionFactory sessionFactory;
 
 	public List<Person> findAll() {
-		return sessionFactory.getCurrentSession().createQuery("from Person p")
-				.list();
+		List<Person> prs = new ArrayList<Person>();
+		Person person1 = new Person("Vasile", "Popescu");
+		person1.setCnp("173753839585");
+		prs.add(person1);
+		return prs;
 	}
 
 	public Person save(Person contact) {
