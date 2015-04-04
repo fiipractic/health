@@ -1,6 +1,5 @@
 package ro.fiipractic.health.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -19,11 +18,8 @@ public class PersonDAOImpl implements PersonDAO {
 	private SessionFactory sessionFactory;
 
 	public List<Person> findAll() {
-		List<Person> prs = new ArrayList<Person>();
-		Person person1 = new Person("Vasile", "Popescu");
-		person1.setCnp("173753839585");
-		prs.add(person1);
-		return prs;
+		return sessionFactory.getCurrentSession().createQuery("from Person p")
+				.list();
 	}
 
 	public Person save(Person contact) {
@@ -36,8 +32,15 @@ public class PersonDAOImpl implements PersonDAO {
 	}
 
 	public Person findById(long id) {
-		return (Person) sessionFactory.getCurrentSession()
-				.createQuery("FROM Person where id =" + id).list().get(0);
+		List<Person> prss = sessionFactory.getCurrentSession()
+				.createQuery("FROM Person where id =" + id).list();
+		try {
+			Person result = prss.get(0);
+			return result;
+		} catch (IndexOutOfBoundsException e) {
+			System.err.println("No person with id: " + id);
+		}
+		return null;
 	}
 
 	/**
