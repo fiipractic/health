@@ -17,6 +17,9 @@
 	<tx:annotation-driven />
 	<!-- Scan the following packages -->
 	<context:component-scan base-package="ro.fiipractic.health" />
+	
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
 	<!-- Define datasource bean -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
