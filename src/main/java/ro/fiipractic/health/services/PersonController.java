@@ -62,7 +62,8 @@ public class PersonController {
 			prsDao.delete(prs);
 			return "{\"Status\":\"Success\"}";
 		} else {
-			return "Can't find person with it: " + id;
+			return "{\"Status\":\"Error\", \"Message\":\"Can't find person with id="
+					+ id + "\"}";
 		}
 
 	}

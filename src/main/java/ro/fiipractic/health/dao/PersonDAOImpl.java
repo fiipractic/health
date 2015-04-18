@@ -39,8 +39,8 @@ public class PersonDAOImpl implements PersonDAO {
 			return result;
 		} catch (IndexOutOfBoundsException e) {
 			System.err.println("No person with id: " + id);
+			return null;
 		}
-		return null;
 	}
 
 	/**
