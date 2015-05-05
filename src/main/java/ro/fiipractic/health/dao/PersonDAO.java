@@ -14,5 +14,7 @@ public interface PersonDAO {
 	
     public Person save(Person contact);
     
+    public Person update(Person contact);
+    
     public void delete(Person contact);
 }

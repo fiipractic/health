@@ -1,4 +1,5 @@
 var selectedId = 0;
+var persons = [];
 $(document).ready(function() {
 	$("#listPersons").click(function() {
 		loadPersons();
@@ -7,6 +8,35 @@ $(document).ready(function() {
 	$("#deletePerson").click(function(id) {
 		deletePerson(selectedId);
 	});
+
+	$("#savePerson").click(function(id) {
+		if ($(this).attr('editing') === 'false') {
+			createPerson();
+		} else {
+			updatePerson(selectedId);
+		}
+	});
+	$("#updatePerson").click(function(id) {
+
+	});
+	$("#openCreate").click(function() {
+		$("#savePerson").attr('editing', 'false');
+		document.getElementById("myModalLabel").innerHTML = "Create person"
+	});
+	$("#openEdit").click(function(id) {
+		if (selectedId === 0) {
+			alert(" You must select a person in order to edit it!");
+		} else {
+			$("#savePerson").attr('editing', 'true');
+			document.getElementById("myModalLabel").innerHTML = "Edit person"
+
+			var selectedPerson = findPErsonById(selectedId);
+			$("#firstname").val(selectedPerson.firstName);
+			$("#lastname").val(selectedPerson.lastName);
+			$("#cnp").val(selectedPerson.cnp);
+		}
+	});
+
 });
 
 /**
@@ -19,7 +49,7 @@ var loadPersons = function() {
 		dataType : 'json',
 		cache : false,
 		success : function(data) {
-			//clear the existing rows
+			// clear the existing rows
 			$("#persons tr:first").siblings("tr").remove();
 			// update the HTML by adding a table>row for each person
 			for (var i = 0; i < data.length; i++) {
@@ -30,6 +60,7 @@ var loadPersons = function() {
 						+ person.cnp + "</td>" + "</tr>";
 				$("#persons tr:last").after($row);
 				addRowHandlers("persons");
+				persons.push(person);
 			}
 		}
 	});
@@ -54,7 +85,6 @@ var deletePerson = function(id) {
 	});
 };
 
-
 function addRowHandlers(tableId) {
 	var table = document.getElementById(tableId);
 	var rows = table.getElementsByTagName("tr");
@@ -64,7 +94,8 @@ function addRowHandlers(tableId) {
 			return function() {
 				var id = row.id;
 				row.classList.add("selected")
-				$(row).addClass("selected").siblings("tr").removeClass("selected");
+				$(row).addClass("selected").siblings("tr").removeClass(
+						"selected");
 				selectedId = id;
 			};
 		};
@@ -73,3 +104,59 @@ function addRowHandlers(tableId) {
 	}
 }
 
+function createPerson() {
+
+	var firstname = $("#firstname").val();
+	var lastname = $("#lastname").val();
+	var cnp = $("#cnp").val();
+
+	$.ajax({
+		url : window.location.href + '/person/create',
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		type : 'POST',
+		data : JSON.stringify({
+			"firstName" : firstname,
+			"lastName" : lastname,
+			"cnp" : cnp
+		}),
+		success : function(result) {
+			$('#myModal').modal('hide');
+			loadPersons();
+		}
+	});
+}
+
+function updatePerson(id) {
+
+	var firstname = $("#firstname").val();
+	var lastname = $("#lastname").val();
+	var cnp = $("#cnp").val();
+
+	$.ajax({
+		url : window.location.href + '/person/update/' + id,
+		contentType : 'application/json; charset=utf-8',
+		dataType : 'json',
+		type : 'PUT',
+		data : JSON.stringify({
+			"firstName" : firstname,
+			"lastName" : lastname,
+			"cnp" : cnp
+		}),
+		success : function(result) {
+			$('#myModal').modal('hide');
+			loadPersons();
+		}
+	});
+}
+
+function findPErsonById(id) {
+	var foundPerson = {};
+	for (i = 0; i < persons.length; i++) {
+		if (persons[i].id === parseInt(id, 10)) {
+			foundPerson = persons[i];
+			break;
+		}
+	}
+	return foundPerson;
+}

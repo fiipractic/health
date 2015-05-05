@@ -45,6 +45,20 @@ public class PersonController {
 		return person;
 	}
 
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, headers = "Accept=application/json")
+	public @ResponseBody Person updatePerson(@PathVariable("id") int id,
+			@RequestBody Person person) {
+		Person p = prsDao.findById(id);
+		if (p != null) {
+			p.setFirstName(person.getFirstName());
+			p.setLastName(person.getLastName());
+			p.setCnp(person.getCnp());
+			prsDao.update(p);
+			return person;
+		}
+		return null;
+	}
+
 	@RequestMapping(value = "/createMany", method = RequestMethod.POST, headers = "Accept=application/json")
 	public @ResponseBody List<Person> createPersons(
 			@RequestBody List<Person> person) {

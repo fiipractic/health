@@ -26,6 +26,11 @@ public class PersonDAOImpl implements PersonDAO {
 		sessionFactory.getCurrentSession().saveOrUpdate(contact);
 		return contact;
 	}
+	
+	public Person update(Person contact) {
+		sessionFactory.getCurrentSession().update(contact);
+		return contact;
+	}
 
 	public void delete(Person contact) {
 		sessionFactory.getCurrentSession().delete(contact);
